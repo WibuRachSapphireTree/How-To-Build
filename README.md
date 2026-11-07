@@ -30,20 +30,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib \
   git git-lfs gnupg gperf imagemagick lib32readline-dev lib32z1-dev libelf-dev liblz4-tool \
   libncurses5-dev libncurses-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush \
-  rsync schedtool squashfs-tools xsltproc zip unzip zlib1g-dev python3 python-is-python3 openjdk-17-jdk
-```
-
-### Install Google's `repo` tool
-Google's `repo` tool coordinates the hundreds of individual Git repositories that make up Android:
-
-```bash
-mkdir -p ~/.bin
-curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
-chmod a+x ~/.bin/repo
-
-# Add to PATH if not already present
-echo 'export PATH=~/.bin:$PATH' >> ~/.bashrc
-source ~/.bashrc
+  repo rsync schedtool squashfs-tools xsltproc zip unzip zlib1g-dev python3 python-is-python3 openjdk-17-jdk
 ```
 
 ### Configure Git & Git LFS
