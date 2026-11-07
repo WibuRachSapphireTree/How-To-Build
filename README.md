@@ -1,6 +1,8 @@
 # Building Evolution X for Redmi Note 13 4G (sapphire / sapphiren)
 
-Build guide for compiling Evolution X (Android 17 / `cnb` branch) on the Xiaomi Redmi Note 13 4G series (Snapdragon 685 - SM6225).
+Build guide for compiling Evolution X (Android 17 / `cnb` branch) on the Xiaomi Redmi Note 13 4G series, powered by the **Qualcomm Snapdragon 685 (SM6225)**.
+
+This custom ROM is built on top of the [Android Open Source Project (AOSP)](https://android.googlesource.com/), utilizing Evolution X's manifest additions alongside device trees tailored for the Snapdragon 685 platform.
 
 ---
 
@@ -14,13 +16,13 @@ Android 17 build chains rely heavily on updated Clang/LLVM toolchains, Python 3.
 * **CPU:** 8 cores / 16 threads or better.
 * **RAM:** 16 GB minimum + at least 32 GB swap. A17 metalava and ninja linking stages are memory-hungry and will crash if you run out of memory. 32 GB RAM is ideal.
 * **Storage:** 350 GB+ available on an SSD or NVMe drive. Building on an HDD is not recommended.
-* **Network:** Fast and stable connection (manifest + trees + git-lfs pull over 150 GB).
+* **Network:** Fast and stable connection (AOSP source code from [android.googlesource.com](https://android.googlesource.com/), Evolution X repos, and Git LFS exceed 150 GB in total).
 
 ---
 
 ## 1. Environment Setup
 
-Update your package index and install the required dependencies:
+Update your package index and install the required dependencies (as documented in the [AOSP Build Environment Guide](https://android.googlesource.com/)):
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -32,6 +34,8 @@ sudo apt install -y bc bison build-essential ccache curl flex g++-multilib gcc-m
 ```
 
 ### Install Google's `repo` tool
+Google's `repo` tool coordinates the hundreds of individual Git repositories that make up Android:
+
 ```bash
 mkdir -p ~/.bin
 curl https://storage.googleapis.com/git-repo-downloads/repo > ~/.bin/repo
@@ -48,6 +52,14 @@ git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 git lfs install
 ```
+
+### Google Git Authentication (Generate Password)
+Syncing upstream AOSP trees anonymously often triggers Google's IP rate limiting (`HTTP 429 Too Many Requests` or random connection drops). Setting up Google Git credentials authenticates your requests via `~/.gitcookies` and prevents rate limit errors:
+
+1. Go to [android.googlesource.com](https://android.googlesource.com/) and click **Generate Password** in the top right (or directly visit [android.googlesource.com/new-password](https://android.googlesource.com/new-password)).
+2. Sign in with your Google Account.
+3. A page will appear with a copyable bash command block (which sets up `~/.gitcookies` and runs `git config --global http.cookiefile ~/.gitcookies`).
+4. Copy the entire command block from the page, paste it into your terminal, and press Enter.
 
 ### Setup Ccache
 Ccache caches compiled C/C++ objects, cutting future build times down from a couple of hours to 20-30 minutes.
@@ -66,6 +78,8 @@ ccache -o compression=true
 ---
 
 ## 2. Syncing Evolution X Source (Android 17 - cnb)
+
+Evolution X pairs Google's upstream [AOSP](https://android.googlesource.com/platform/manifest) source code with its own customization layers.
 
 Create a workspace directory and initialize the manifest:
 
@@ -91,6 +105,8 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 ## 3. Cloning Device Trees & HALs (lineage-24.0)
 
 Source: [WibuRachSapphireTree/Script (branch 24.0)](https://github.com/WibuRachSapphireTree/Script/tree/24.0)
+
+Redmi Note 13 4G (`sapphire` / `sapphiren`) is powered by the **Qualcomm Snapdragon 685 (SM6225)**. The trees are maintained under branch `lineage-24.0` (with sepolicy on `17` and dolby on `16`).
 
 From the root of your source directory (`~/evolution`), run the following commands:
 
