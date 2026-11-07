@@ -1,6 +1,6 @@
 # Building Evolution X for Redmi Note 13 4G (sapphire / sapphiren)
 
-A guide for building Evolution X (Android 17 / `cnb` branch) for the Xiaomi Redmi Note 13 4G series (Snapdragon 680/685 - SM6225).
+Build guide for compiling Evolution X (Android 17 / `cnb` branch) on the Xiaomi Redmi Note 13 4G series (Snapdragon 680/685 - SM6225).
 
 ---
 
@@ -90,16 +90,12 @@ repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
 ## 3. Cloning Device Trees & HALs (lineage-24.0)
 
-Redmi Note 13 4G (`sapphire`) uses the SM6225 platform. The trees are maintained under branch `lineage-24.0` (with sepolicy on `17` and dolby on `16`).
+Source: [WibuRachSapphireTree/Script (branch 24.0)](https://github.com/WibuRachSapphireTree/Script/tree/24.0)
 
-Run this script from `~/evolution` to clone all required repositories into place:
+From the root of your source directory (`~/evolution`), run the following commands:
 
+### Clone Device Trees
 ```bash
-cat << 'EOF' > sync_trees.sh
-#!/bin/bash
-set -e
-
-echo "--> Cloning device trees..."
 rm -rf device/xiaomi/sapphire-kernel
 git clone --depth 1 -b lineage-24.0 https://github.com/WibuRachSapphireTree/device_xiaomi_sapphire-kernel device/xiaomi/sapphire-kernel
 
@@ -118,7 +114,15 @@ git clone --depth 1 -b lineage-24.0 https://github.com/LineageOS/android_hardwar
 rm -rf hardware/dolby
 git clone --depth 1 https://github.com/WibuRachSapphireTree/hardware_dolby hardware/dolby
 
-echo "--> Cloning Qualcomm SM6225 HALs..."
+rm -rf device/xiaomi/miuicamera-sapphire
+git clone --depth 1 -b lineage-24.0 https://github.com/WibuRachSapphireTree/device_xiaomi_miuicamera-sapphire device/xiaomi/miuicamera-sapphire
+
+rm -rf vendor/xiaomi/miuicamera-sapphire
+git clone --depth 1 -b lineage-24.0 https://github.com/WibuRachSapphireTree/vendor_xiaomi_miuicamera-sapphire vendor/xiaomi/miuicamera-sapphire
+```
+
+### Clone Qualcomm SM6225 HALs
+```bash
 rm -rf hardware/qcom-caf/common
 git clone --depth 1 -b lineage-24.0 https://github.com/sapphire-sm6225/android_hardware_qcom-caf_common.git hardware/qcom-caf/common
 
@@ -145,12 +149,6 @@ git clone --depth 1 -b lineage-24.0-caf-sm6225 https://github.com/sapphire-sm622
 
 rm -rf device/qcom/sepolicy_vndr/sm6225
 git clone --depth 1 -b lineage-24.0-caf-sm6225 https://github.com/sapphire-sm6225/device_qcom_sepolicy_vndr.git device/qcom/sepolicy_vndr/sm6225
-
-echo "--> All trees and HALs cloned."
-EOF
-
-chmod +x sync_trees.sh
-./sync_trees.sh
 ```
 
 ---
