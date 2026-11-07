@@ -30,7 +30,14 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib \
   git git-lfs gnupg gperf imagemagick lib32readline-dev lib32z1-dev libelf-dev liblz4-tool \
   libncurses5-dev libncurses-dev libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush \
-  repo rsync schedtool squashfs-tools xsltproc zip unzip zlib1g-dev python3 python-is-python3 openjdk-17-jdk
+  rsync schedtool squashfs-tools xsltproc zip unzip zlib1g-dev python3 python-is-python3 openjdk-17-jdk
+```
+
+### Install `repo`
+On Ubuntu 24.04 LTS, `repo` is available directly from the official repositories:
+
+```bash
+sudo apt install -y repo
 ```
 
 ### Configure Git & Git LFS
