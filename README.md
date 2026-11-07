@@ -1,6 +1,6 @@
 # Building Evolution X for Redmi Note 13 4G (sapphire / sapphiren)
 
-Build guide for compiling Evolution X (Android 17 / `cnb` branch) on the Xiaomi Redmi Note 13 4G series (Snapdragon 680/685 - SM6225).
+Build guide for compiling Evolution X (Android 17 / `cnb` branch) on the Xiaomi Redmi Note 13 4G series (Snapdragon 685 - SM6225).
 
 ---
 
